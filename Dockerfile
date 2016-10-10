@@ -12,6 +12,12 @@ RUN stack install Agda-$AGDA_VERSION
 RUN mkdir -p $AGDA_DIR/lib \
     && curl -SL https://github.com/agda/agda-stdlib/archive/v0.12.tar.gz \
     | tar -xzC $AGDA_DIR/lib \
-    && echo 'standard-libraries' > $AGDA_DIR/defaults \
+    && echo 'standard-library' > $AGDA_DIR/defaults \
     && echo '${AGDA_DIR}/lib/agda-stdlib-0.12/standard-library.agda-lib' \
     > $AGDA_DIR/libraries-$AGDA_VERSION
+
+RUN apt-get install -y emacs-nox
+RUN mkdir /root/.emacs.d
+COPY init.el /root/.emacs.d
+
+ENV TERM=xterm-256color
